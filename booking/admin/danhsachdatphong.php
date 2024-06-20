@@ -27,7 +27,7 @@ include('../config.php');
                     <th scope="col">Tên phòng</th>
                     <th scope="col">Ngày nhận</th>
                     <th scope="col">Ngày trả</th>
-                    <th scope="col">Tổng</th>
+                    <th scope="col">Tổng tiền</th>
                     <th scope="col">Tình trạng đơn</th>
                     <th scope="col">Xác nhận</th>
                     <th scope="col">Hủy</th>
@@ -37,7 +37,7 @@ include('../config.php');
                 <?php
                 if (isset($_POST['btn-search'])) {
                     $cus_name = $_POST['cus-name'];
-                    $sql = "SELECT o.ordroom_id,o.ordroom_total,o.ordroom_start,o.ordroom_end,o.ordroom_status,r.room_type,r.room_id,c.cus_name
+                    $sql = "SELECT o.ordroom_id,o.price,o.ordroom_start,o.ordroom_end,o.ordroom_status,r.room_type,r.room_id,c.cus_name
                             FROM  tb_order_rooms o ,tb_rooms r ,tb_customers c
                             WHERE  o.room_id = r.room_id AND o.cus_id =c.cus_id AND c.cus_name ='$cus_name'";
                     $result = mysqli_query($conn, $sql);
@@ -50,7 +50,7 @@ include('../config.php');
                             echo '<td>' . $row['room_type'] . '</td>';
                             echo '<td>' . $row['ordroom_start'] . '</td>';
                             echo '<td>' . $row['ordroom_end'] . '</td>';
-                            echo '<td class="text-end">' . number_format($row['ordroom_total']) . ' đ</td>';
+                            echo '<td class="text-end">' . number_format($row['price']) . ' đ</td>';
                             echo '<td>' . $row['ordroom_status'] . '</td>';
                             if ($row['ordroom_status'] == 'Đã hủy') {
                                 echo '<td><a href="#"><i class="fas fa-times-circle" style="color:#eb2f06;"></i></a></td>';
@@ -62,7 +62,7 @@ include('../config.php');
                         }
                     }
                 } else {
-                    $sql = "SELECT o.ordroom_id,o.ordroom_total,o.ordroom_start,o.ordroom_end,o.ordroom_status,r.room_type,r.room_id,c.cus_name
+                    $sql = "SELECT o.ordroom_id,o.price,o.ordroom_start,o.ordroom_end,o.ordroom_status,r.room_type,r.room_id,c.cus_name
                             FROM  tb_order_rooms o ,tb_rooms r ,tb_customers c
                             WHERE  o.room_id = r.room_id AND o.cus_id = c.cus_id";
                     $result = mysqli_query($conn, $sql);
@@ -75,7 +75,7 @@ include('../config.php');
                             echo '<td>' . $row['room_type'] . '</td>';
                             echo '<td>' . $row['ordroom_start'] . '</td>';
                             echo '<td>' . $row['ordroom_end'] . '</td>';
-                            echo '<td class="text-end">' . number_format($row['ordroom_total']) . ' đ</td>';
+                            echo '<td class="text-end">' . number_format($row['price']) . ' đ</td>';
                             echo '<td>' . $row['ordroom_status'] . '</td>';
                             if ($row['ordroom_status'] == 'Đã hủy') {
                                 echo '<td><a href="#"><i class="fas fa-times-circle" style="color:#eb2f06;"></i></a></td>';

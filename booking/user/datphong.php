@@ -17,13 +17,13 @@
             <div class="card">
                 <div class="card-header">Đặt Phòng</div>
                 <div class="card-body">
-                    <form action="datphong_controller.php" method="post">
+                    <form action="datphong_controller.php" method="post" onsubmit="return validateDate()">
                         <div class="mb-3">
                             <?php 
-                                $loaiphong=$_GET['loaiphong'];
+                                $loaiphong = $_GET['loaiphong'];
                             ?>
                             <label for="room-type" class="form-label">Loại Phòng</label>
-                            <input type="text" class="form-control" name="room-type"value="<?php echo $loaiphong?>" readonly>
+                            <input type="text" class="form-control" name="room-type" value="<?php echo $loaiphong ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="total" class="form-label">Số người</label>
@@ -31,15 +31,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="from-date" class="form-label">Ngày Bắt Đầu</label>
-                            <input type="date" class="form-control" name="from-date" required>
+                            <input type="date" class="form-control" name="from-date" id="from-date" required>
                         </div>
                         <div class="mb-3">
                             <label for="to-date" class="form-label">Ngày Kết Thúc</label>
-                            <input type="date" class="form-control" name="to-date" required>
+                            <input type="date" class="form-control" name="to-date" id="to-date" required>
                         </div>
                         <button type="submit" class="btn btn-primary" name="btnSubmit">Đặt phòng</button>
-                        <button class="btn btn-primary" name="btnSubmit"><a href="phong.php" style="color:#fff;text-decoration:none">Hủy</a></button>
-
+                        <button class="btn btn-primary"><a href="phong.php" style="color:#fff;text-decoration:none">Hủy</a></button>
                     </form>
                 </div>
             </div>
@@ -49,6 +48,19 @@
 
 <!-- Link đến Bootstrap JS và Popper.js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-rnGQNllzqYNLg4kafOtWqgD5EAgdaSz1Vvv6pauFMOcAowbrG/sQeV3SweE27zWQ" crossorigin="anonymous"></script>
+
+<script>
+    function validateDate() {
+        var fromDate = document.getElementById('from-date').value;
+        var toDate = document.getElementById('to-date').value;
+        if (fromDate > toDate) {
+            alert('Ngày đi không thể lớn hơn ngày đến');
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
 
 </body>
 </html>

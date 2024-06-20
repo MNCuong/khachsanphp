@@ -64,7 +64,7 @@
                         <th scope="col" class="top">Tên phòng</th>
                         <th scope="col" class="top">Ngày nhận </th>
                         <th scope="col" class="top">Ngày trả </th>
-                        <th scope="col" class="top">Tổng </th>
+                        <th scope="col" class="top">Tổng tiền</th>
                         <th scope="col" class="top">Tình trạng đơn </th>
                         <th scope="col" class="top">Thanh toán(10%)</th>
                     </tr>
@@ -73,7 +73,7 @@
             <?php
             if(isset($_SESSION['client'])){ 
             $id = $_SESSION['idCus'];}
-            $sql = "SELECT o.ordroom_id,o.ordroom_total,o.ordroom_total_day,o.ordroom_start,o.ordroom_end,o.ordroom_status,r.room_type,r.room_image
+            $sql = "SELECT o.ordroom_id,o.price,o.ordroom_total_day,o.ordroom_start,o.ordroom_end,o.ordroom_status,r.room_type,r.room_image
             FROM  tb_order_rooms o ,tb_rooms r 
             WHERE  o.room_id = r.room_id AND o.cus_id =$id";
             $result = mysqli_query($conn,$sql);
@@ -86,7 +86,7 @@
                                      echo '<td>'.$row['room_type'].'</td>';
                                      echo '<td>'.$row['ordroom_start'].'</td>';
                                      echo '<td>'.$row['ordroom_end'].'</td>';
-                                     echo '<td class="text-end">'.number_format($row['ordroom_total']).' đ</td>';
+                                     echo '<td class="text-end">'.number_format($row['price']).' đ</td>';
                                      echo '<td>'.$row['ordroom_status'].'</td>';
                                      echo '<td><button><a class="payUrl" href="../thanhtoanmomo.php">Momo ATM</a></button>
                                      <button><a class="payUrlqr" href="../thanhtoanmomoqr.php">Momo QR</a></button></td>';
@@ -119,7 +119,8 @@
                                      echo '<td class="text-end">'.number_format($row['ordser_total']).' đ</td>';
                                      echo '<td>'.$row['ordser_status'].'</td>';
                         echo '</tr>';
-                    }}else{
+                    }}
+                else{
                         echo'<h4 for="" class=" text-center p-5 mb-0" style=" color:#747d8c;">Bạn không có đơn Phòng nào !</h4>';
                     } ?>
               </tbody>

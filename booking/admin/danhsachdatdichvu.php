@@ -30,7 +30,9 @@
                     <th scope="col">Tên dịch vụ</th>
                     <th scope="col">Từ ngày</th>
                     <th scope="col">Đến ngày</th>
-                    <th scope="col">Tổng</th>
+                    <th scope="col">Số người</th>
+
+                    <th scope="col">Tổng tiền</th>
                     <th scope="col">Tình trạng đơn</th>
                     <th scope="col">Xác nhận</th>
                     <th scope="col">Hủy</th>
@@ -40,7 +42,7 @@
                 <?php
                     if (isset($_POST['btn-search'])) {
                         $cus_name = $_POST['cus-name'];
-                        $sql = "SELECT o.ordser_id, o.ordser_total, o.ordser_end, o.ordser_start, o.ordser_status, s.ser_name, s.ser_id, c.cus_name
+                        $sql = "SELECT o.ordser_id, o.ser_price,o.ordser_total, o.ordser_end, o.ordser_start, o.ordser_status, s.ser_name, s.ser_id, c.cus_name
                                 FROM tb_order_services o, tb_services s, tb_customers c
                                 WHERE o.ser_id = s.ser_id AND o.cus_id = c.cus_id AND c.cus_name = '$cus_name'";
                         $result = mysqli_query($conn, $sql);
@@ -54,8 +56,11 @@
                                 echo '<td>' . $row['ser_name'] . '</td>';
                                 echo '<td>' . $row['ordser_start'] . '</td>';
                                 echo '<td>' . $row['ordser_end'] . '</td>';
-                                echo '<td class="text-end">' . number_format($row['ordser_total']) . ' đ</td>';
+                                echo '<td>' . $row['ordser_total'] . '</td>';
+                                echo '<td class="text-end">' . number_format($row['ser_price']) . ' đ</td>';
+
                                 echo '<td>' . $row['ordser_status'] . '</td>';
+
                                 if ($row['ordser_status'] == 'Đã hủy') {
                                     echo '<td><i class="fas fa-window-close" style="color:#eb2f06;"></i></td>';
                                 } else {
@@ -66,7 +71,7 @@
                             }
                         }
                     } else {
-                        $sql = "SELECT o.ordser_id, o.ordser_total, o.ordser_end, o.ordser_start, o.ordser_status, s.ser_name, s.ser_id, c.cus_name
+                        $sql = "SELECT o.ordser_id, o.ser_price,o.ordser_total, o.ordser_end, o.ordser_start, o.ordser_status, s.ser_name, s.ser_id, c.cus_name
                                 FROM tb_order_services o, tb_services s, tb_customers c
                                 WHERE o.ser_id = s.ser_id AND o.cus_id = c.cus_id";
                         $result = mysqli_query($conn, $sql);
@@ -80,8 +85,9 @@
                                 echo '<td>' . $row['ser_name'] . '</td>';
                                 echo '<td>' . $row['ordser_start'] . '</td>';
                                 echo '<td>' . $row['ordser_end'] . '</td>';
-                                echo '<td class="text-end">' . number_format($row['ordser_total']) . ' đ</td>';
-                                echo '<td>' . $row['ordser_status'] . '</td>';
+                                echo '<td>' . $row['ordser_total'] . '</td>';
+                                echo '<td class="text-end">' . number_format($row['ser_price']) . ' đ</td>';
+                               echo '<td>' . $row['ordser_status'] . '</td>';
                                 if ($row['ordser_status'] == 'Đã hủy') {
                                     echo '<td><i class="fas fa-times-circle" style="color:#eb2f06;"></i></td>';
                                     echo '<td><i class="fas fa-times-circle" style="color:#eb2f06;"></i></td>';
