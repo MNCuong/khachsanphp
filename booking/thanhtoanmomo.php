@@ -26,6 +26,8 @@ function execPostRequest($url, $data)
     curl_close($ch);
     return $result;
 }
+$price = isset($_GET['gia']) ? $_GET['gia'] : 0;
+$serprice = isset($_GET['giaser']) ? $_GET['giaser'] : 0;
 
 $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 $partnerCode = 'MOMOBKUN20180529';
@@ -33,7 +35,13 @@ $accessKey = 'klm05TvNBzhg7h7j';
 $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 
 $orderInfo = "Thanh toán qua MoMo";
-$amount = "10000";
+if($price!=0){
+$amount = $price*10/100;
+}
+else if($serprice!=0){
+    $amount = $serprice*10/100;
+
+}
 $orderId = time()."";
 
 $redirectUrl = "http://localhost/booking/thanks.php";

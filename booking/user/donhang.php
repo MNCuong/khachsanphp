@@ -88,9 +88,15 @@
                                      echo '<td>'.$row['ordroom_end'].'</td>';
                                      echo '<td class="text-end">'.number_format($row['price']).' đ</td>';
                                      echo '<td>'.$row['ordroom_status'].'</td>';
-                                     echo '<td><button><a class="payUrl" href="../thanhtoanmomo.php">Momo ATM</a></button>
-                                     <button><a class="payUrlqr" href="../thanhtoanmomoqr.php">Momo QR</a></button></td>';
+                                     if($row['ordroom_status']!="Xác nhận"){
+                                     echo '<td><button><a class="payUrl" href="../thanhtoanmomo.php?gia=' . $row['price'] . '">Momo ATM</a></button>
+                                     </td>';
+                                     }
+                                     else{
+                                        echo '<td>Chưa xác nhận</td>';
 
+                                     }
+                                    
                         echo '</tr>';
             
             //đơn dịch vụ
@@ -103,7 +109,7 @@
             <?php 
             if(isset($_SESSION['client'])){ 
                 $id = $_SESSION['idCus'];}
-            $sql = "SELECT o.ordser_id,o.ordser_total,o.ordser_total_day,o.ordser_start,o.ordser_end,o.ordser_status,s.ser_name,s.ser_image
+            $sql = "SELECT o.ordser_id,o.ser_price,o.ordser_total,o.ordser_total_day,o.ordser_start,o.ordser_end,o.ordser_status,s.ser_name,s.ser_image
             FROM  tb_order_services o ,tb_services s 
             WHERE  o.ser_id = s.ser_id AND o.cus_id =$id";
             $result = mysqli_query($conn,$sql);
@@ -116,8 +122,15 @@
                                      echo '<td>'.$row['ser_name'].'</td>';
                                      echo '<td>'.$row['ordser_start'].'</td>';
                                      echo '<td>'.$row['ordser_end'].'</td>';
-                                     echo '<td class="text-end">'.number_format($row['ordser_total']).' đ</td>';
+                                     echo '<td class="text-end">'.number_format($row['ser_price']).' đ</td>';
                                      echo '<td>'.$row['ordser_status'].'</td>';
+                                     if($row['ordser_status']!="Xác nhận"){
+                                     echo '<td><button><a class="payUrl" href="../thanhtoanmomo.php?giaser=' . $row['ser_price'] . '">Momo ATM</a></button>
+                                     </td>';}
+                                     else{
+                                        echo '<td>Chưa xác nhận</td>';
+
+                                     }
                         echo '</tr>';
                     }}
                 else{
